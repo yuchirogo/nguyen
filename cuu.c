@@ -2357,4 +2357,804 @@ void delete(LabelType x, Tree *pT) {
         }
     }
 }
+//makeNull(S)
+void makeNull(Set *S){
+    for(int i=0;i<N;i++){
+        S->data[i]=0;
+    }
+}
+//insert(x, S)
+void insert(int x,Set *S){
+        S->data[x]=1;
+}
+//insert(x, S)
+void insert(int x,Set *S){
+    if(S->data[x]){
+        printf("Error: element %d has existed.\n",x);
+    }
+    S->data[x]=1;
+}
+// delete(x, S)
+void delete(int x,Set *S){
+    S->data[x]=0;
+}
+//delete(x, S)
+void delete(int x,Set *S){
+    if(S->data[x]==0){
+        printf("Error: element %d does not exist.\n",x);
+    }
+    S->data[x]=0;
+}
+//member(x, S)
+int member(int x,Set *S){
+    return S->data[x]==1;
+}
+// setUnion(A, B, C)
+void setUnion(Set *A,Set *B,Set *C){
+    for(int i=0;i<N;i++){
+        C->data[i]=A->data[i]||B->data[i];
+    }
+}
+//setIntersection(A, B, C)
+void setIntersection(Set *A,Set *B,Set *C){
+    for(int i=0;i<N;i++){
+        C->data[i]=A->data[i]&&B->data[i];
+    }
+}
+// setDifference(A, B, C)
+void setDifference(Set *A,Set *B,Set *C){
+    for(int i=0;i<N;i++){
+        C->data[i]=A->data[i]&&!B->data[i];
+    }
+}
+//assign(A, B)
+void assign(Set *A,Set *B){
+    for(int i=0;i<N;i++){
+        A->data[i]=B->data[i];
+    }
+}
+//equal(A, B)
+int equal(Set *A,Set *B){
+    for(int i=0;i<N;i++){
+        if(A->data[i]!=B->data[i]){
+            return 0;
+        }
+    }
+     return 1;
+}
+//makeNull(S)*
+void makeNull(Set *pS) {
+    for (int i = 0; i < N; ++i)
+        pS->data[i] = 0;
+}
+//insert(x, S)*
+void insert(int x,Set *S){
+        int i=x/8;
+        int j=x%8;
+        S->data[i]|=(1<<j);
+}
+// insert(x, S)*
+void insert(int x,Set *S){
+        int i=x/8;
+        int j=x%8;
+        if(S->data[i]&(1<<j)){
+            printf("Error: element %d has existed.\n",x);
+        }
+        S->data[i]|=(1<<j);
+}
+//delete(x, S)*
+void delete(int x,Set *S){
+        int i=x/8;
+        int j=x%8;
+        S->data[i]&=~(1<<j);
+}
+//delete(x, S)*
+void delete(int x,Set *S){
+        int i=x/8;
+        int j=x%8;
+        if((S->data[i]&(1<<j))==0){
+            printf("Error: element %d does not exist.\n",x);
+        }
+        S->data[i]&=~(1<<j);
+}
+//member(x, S)*
+int member(int x,Set *S){
+        int i=x/8;
+        int j=x%8;
+        return S->data[i]&(1<<j);
+}
+// setUnion(A, B, C)*
+void setUnion(Set *A,Set *B,Set *C){
+    for(int i=0;i<N;i++){
+        C->data[i]=A->data[i]|B->data[i];
+    }
+}
+//setDifference(A, B, C)*
+void setDifference(Set *A,Set *B,Set *C){
+    for(int i=0;i<N;i++){
+        C->data[i]=A->data[i]&~B->data[i];
+    }
+}
+//setIntersection(A, B, C)*
+void setIntersection(Set *A,Set *B,Set *C){
+    for(int i=0;i<N;i++){
+        C->data[i]=A->data[i]&B->data[i];
+    }
+}
+//assign(A, B)*
+void assign(Set *A,Set *B){
+    for(int i=0;i<N;i++){
+        A->data[i]=B->data[i];
+    }
+}
+//equal(A, B)*
+int equal(Set *A,Set *B){
+    for(int i=0;i<N;i++){
+        if(A->data[i]!=B->data[i]){
+            return 0;
+        }
+    }
+     return 1;
+}
+//makeNull(S)bnt
+void makeNull(Set *pS) {
+    *pS = NULL;
+}
+//member(x, S)bnt
+int member(int x, Set *pS) {
+    Set current = *pS;
+    while (current != NULL) {
+        if (x == current->label) {
+            return 1;  
+        } else if (x < current->label) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+    
+    return 0; 
+}
+// insert(x, S)bnt
+void insert(int x, Set *pS) {
+    if (*pS == NULL) {
+        Node *newNode = (Node *)malloc(sizeof(Node));
+        newNode->label = x;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        *pS = newNode;
+        return;
+    }
+    
+    if (x == (*pS)->label) {
+        return; 
+    }
+    
+    if (x < (*pS)->label) {
+        insert(x, &(*pS)->left);
+    } else {
+        insert(x, &(*pS)->right);
+    }
+}
+//insert(x, S)bnt
+void insert(int x, Set *pS) {
+    if (*pS == NULL) {
+        Node *newNode = (Node *)malloc(sizeof(Node));
+        newNode->label = x;
+        newNode->left = NULL;
+        newNode->right = NULL;
+        *pS = newNode;
+        return;
+    }
+    
+    if (x == (*pS)->label) {
+        printf("Error: element %d has existed.\n", x);
+        return;
+    }
+    
+    if (x < (*pS)->label) {
+        insert(x, &(*pS)->left);
+    } else {
+        insert(x, &(*pS)->right);
+    }
+}
+//delete(x, S)bnt
+void delete(int x, Set *pS) {
+    if (*pS == NULL) {
+        return; // x not in the tree, do nothing
+    }
+
+    if (x < (*pS)->label) {
+        // x is in the left subtree
+        delete(x, &(*pS)->left);
+    } else if (x > (*pS)->label) {
+        // x is in the right subtree
+        delete(x, &(*pS)->right);
+    } else {
+        // Found the node to delete
+        Node *temp;
+
+        if ((*pS)->left == NULL) {
+            // Case 1: no left child
+            temp = *pS;
+            *pS = (*pS)->right;
+            free(temp);
+        } else if ((*pS)->right == NULL) {
+            // Case 2: no right child
+            temp = *pS;
+            *pS = (*pS)->left;
+            free(temp);
+        } else {
+            // Case 3: two children
+            // Find the successor (smallest in right subtree)
+            Node *succ = (*pS)->right;
+            while (succ->left != NULL) {
+                succ = succ->left;
+            }
+            // Copy successor's label to current node
+            (*pS)->label = succ->label;
+            // Delete the successor
+            delete(succ->label, &(*pS)->right);
+        }
+    }
+}
+//delete(x, S)bnt
+void delete(int x, Set *pS) {
+    if (*pS == NULL) {
+        printf("Error: element %d does not exist.\n", x);
+        return;
+    }
+
+    if (x < (*pS)->label) {
+        
+        delete(x, &(*pS)->left);
+    } else if (x > (*pS)->label) {
+        
+        delete(x, &(*pS)->right);
+    } else {
+        
+        Node *temp;
+
+        if ((*pS)->left == NULL) {
+            
+            temp = *pS;
+            *pS = (*pS)->right;
+            free(temp);
+        } else if ((*pS)->right == NULL) {
+            
+            temp = *pS;
+            *pS = (*pS)->left;
+            free(temp);
+        } else {
+            
+            Node *succ = (*pS)->right;
+            while (succ->left != NULL) {
+                succ = succ->left;
+            }
+            
+            (*pS)->label = succ->label;
+            
+            delete(succ->label, &(*pS)->right);
+        }
+    }
+}
+// setUnion(A, B, C)bnt
+void traverseAndInsert(Set *A,Set *B){
+    if(*A==NULL){
+        return;
+    }
+    insert((*A)->label,B);
+    traverseAndInsert(&(*A)->left,B);
+    traverseAndInsert(&(*A)->right,B);
+}
+void setUnion(Set *A,Set *B,Set *C){
+    makeNull(C);
+    traverseAndInsert(A,C);
+    traverseAndInsert(B,C);
+}
+//setIntersection(A, B, C)bnt
+int member(int x, Set *pS) {
+    Set current = *pS;
+    while (current != NULL) {
+        if (x == current->label) {
+            return 1;  
+        } else if (x < current->label) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+    
+    return 0; 
+}
+void traverseTestAndInsert(Set *A,Set *B,Set *C){
+    if((*A)==NULL){
+        return;
+    }
+    if(member((*A)->label,B))
+    insert((*A)->label,C);
+    traverseTestAndInsert(&(*A)->left,B,C);
+    traverseTestAndInsert(&(*A)->right,B,C);
+}
+void setIntersection(Set *A,Set *B,Set *C){
+    makeNull(C);
+    traverseTestAndInsert(A,B,C);
+}
+//setDifference(A, B, C)bnt
+int member(int x, Set *pS) {
+    Set current = *pS;
+    while (current != NULL) {
+        if (x == current->label) {
+            return 1;  
+        } else if (x < current->label) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
+    
+    return 0; 
+}
+void traverseTestAndInsert(Set *A,Set *B,Set *C){
+    if((*A)==NULL){
+        return;
+    }
+    if(!member((*A)->label,B))
+    insert((*A)->label,C);
+    traverseTestAndInsert(&(*A)->left,B,C);
+    traverseTestAndInsert(&(*A)->right,B,C);
+}
+void setDifference(Set *A,Set *B,Set *C){
+    makeNull(C);
+    traverseTestAndInsert(A,B,C);
+}
+//assign(A, B)bnt
+void traverseAndInsert(Set *A,Set *B){
+    if(*A==NULL){
+        return;
+    }
+    insert((*A)->label,B);
+    traverseAndInsert(&(*A)->left,B);
+    traverseAndInsert(&(*A)->right,B);
+}
+
+void assign(Set *A,Set *B){
+    makeNull(A);
+    traverseAndInsert(B,A);
+}
+//equal(A, B)bnt
+int isSubset(Set *A, Set *B) {
+    if((*A)==NULL){
+        return 1;
+    }
+    if(!member((*A)->label,B))
+    return 0;
+    if(!isSubset(&(*A)->left,B))
+    return 0;
+    return isSubset(&(*A)->right,B);
+}
+
+int equal(Set *pA, Set *pB) {
+    return isSubset(pA, pB) && isSubset(pB, pA);
+}
+//makeNull(T)
+void makeNull(HashTable *T){
+    for(int i=0;i<B;i++){
+        T->buckets[i]=NULL;
+    }
+}
+//member(x, T)
+int member(ElementType x,HashTable *T){
+    int i=h(x);
+    Position p=T->buckets[i];
+    while(p!=NULL){
+        if(x==p->element){
+            return 1;
+        }
+        p=p->next;
+    }
+    return 0;
+}
+//insert(x, T)
+int member(ElementType x,HashTable *T){
+    int i=h(x);
+    Position p=T->buckets[i];
+    while(p!=NULL){
+        if(x==p->element){
+            return 1;
+        }
+        p=p->next;
+    }
+    return 0;
+}
+void insert(ElementType x,HashTable *T){
+    if(member(x,T)) return;
+    int i=h(x);
+    Position temp=T->buckets[i];
+    T->buckets[i]=(Cell*)malloc(sizeof(Cell));
+    T->buckets[i]->element=x;
+    T->buckets[i]->next=temp;
+}
+//insert(x, T)
+int member(ElementType x,HashTable *T){
+    int i=h(x);
+    Position p=T->buckets[i];
+    while(p!=NULL){
+        if(x==p->element){
+            printf("%d has already existed in the hash table, ignore.\n",x);
+            return 1;
+        }
+        p=p->next;
+    }
+    return 0;
+}
+void insert(ElementType x,HashTable *T){
+    if(member(x,T)) return;
+    int i=h(x);
+    Position temp=T->buckets[i];
+    T->buckets[i]=(Cell*)malloc(sizeof(Cell));
+    T->buckets[i]->element=x;
+    T->buckets[i]->next=temp;
+}
+//delete(x, T)
+void delete(ElementType x,HashTable *T){
+    int i=h(x);
+    if(T->buckets[i]==NULL){
+        return;
+    }
+    if(x==T->buckets[i]->element){
+        Position temp=T->buckets[i];
+        T->buckets[i]=temp->next;
+        free(temp);
+        return;
+    }
+    Position p=T->buckets[i];
+    while(p->next!=NULL){
+        if(x==p->next->element){
+            Position temp = p->next;
+            p->next = temp->next;
+            free(temp);
+            return;
+        }
+        p=p->next;
+    }
+}
+//delete(x, T)
+void delete(ElementType x,HashTable *T){
+    int i=h(x);
+    if(T->buckets[i]==NULL){
+        printf( "%d does not exist, ignore.\n",x);
+        return;
+    }
+    if(x==T->buckets[i]->element){
+        Position temp=T->buckets[i];
+        T->buckets[i]=temp->next;
+        free(temp);
+        return;
+    }
+    
+    Position p=T->buckets[i];
+    while(p->next!=NULL){
+        if(x==p->next->element){
+            
+            Position temp = p->next;
+            p->next = temp->next;
+            free(temp);
+            return;
+        }
+        p=p->next;
+    }
+    printf( "%d does not exist, ignore.\n",x);
+}
+//makeNull(T)close
+void makeNull(HashTable *T){
+    for(int i=0;i<B;i++){
+        T->buckets[i]=EMPTY;
+    }
+}
+// member(x, T)close
+int locate(ElementType x, HashTable *T){
+    int i=h(x);
+    int ino=0;
+    while(i<B&&T->buckets[(i+ino)%B]!=x&&T->buckets[(i+ino)%B]!=EMPTY)
+    i++;
+    return (i+ino)%B;
+}
+int member(ElementType x,HashTable *T){
+    int i=locate(x,T);
+    return T->buckets[i]==x;
+}
+//insert(x, T)close
+int locate(ElementType x, HashTable *T) {
+    int i = h(x);
+    int ino = 0;
+    while (ino < B && T->buckets[(i + ino) % B] != x && T->buckets[(i + ino) % B] != EMPTY) {
+        ino++;
+    }
+    return (i + ino) % B;
+}
+
+int locate1(ElementType x, HashTable *T) {
+    int i = h(x);
+    int ino = 0;
+    while (ino < B && T->buckets[(i + ino) % B] != EMPTY && T->buckets[(i + ino) % B] != DELETED) {
+        if (T->buckets[(i + ino) % B] == x) {
+            return (i + ino) % B; // tìm th?y x ? tr? v? v? trí
+        }
+        ino++;
+    }
+    return (i + ino) % B; // tr? v? v? trí EMPTY ho?c DELETED d?u tiên
+}
+
+void insert(ElementType x, HashTable *T) {
+    
+    int i=locate(x,T);
+    if(T->buckets[i]==x)
+    return;
+     i=locate1(x,T);
+    if(T->buckets[i]==EMPTY||T->buckets[i]==DELETED){
+        T->buckets[i]=x;
+    }
+
+}
+// delete(x, T)close
+int locate(ElementType x, HashTable *T){
+    int i=h(x);
+    int ino=0;
+    while(i<B&&T->buckets[(i+ino)%B]!=x&&T->buckets[(i+ino)%B]!=EMPTY)
+    i++;
+    return (i+ino)%B;
+}
+
+void delete(ElementType x, HashTable *T) {
+    int i=locate(x,T);
+    if(T->buckets[i]==x){
+        T->buckets[i]=DELETED;
+        return;
+    }
+}
+//makeNull(T)string
+void makeNull(HashTable *T){
+    for(int i=0;i<B;i++){
+        T->buckets[i]=NULL;
+    }
+}
+//member(x, T)string
+int member(ElementType x, HashTable *pT) {
+    int bucket = h(x);                    // compute hash
+    Position p = pT->buckets[bucket];     // start of chain
+
+    while (p != NULL) {
+        if (strcmp(p->element, x) == 0) { // string comparison
+            return 1;                     // found
+        }
+        p = p->next;
+    }
+    return 0;                             // not found
+}
+//insert(x, T)string
+void insert(ElementType x, HashTable *pT) {
+    int i = h(x);
+    Position p = pT->buckets[i];
+    while (p != NULL) {
+        if (strcmp(p->element, x) == 0)
+            return;
+        p = p->next;
+    }
+    
+    Position temp = pT->buckets[i];
+    pT->buckets[i] = (Cell*)malloc(sizeof(Cell));
+    strcpy(pT->buckets[i]->element, x);
+    pT->buckets[i]->next = temp;
+}
+// delete(x, T)
+void delete(ElementType x, HashTable *pT) {
+    int i = h(x);
+    Position p = pT->buckets[i];
+    if (p == NULL) {
+        //printf("%d does not exist, ignore.\n", x);
+        return;
+    }
+    if (strcmp(p->element, x) == 0) { //delete first
+        Position temp = p;
+        pT->buckets[i] = temp->next;
+        free(temp);
+        return;
+    }
+    
+    while (p->next != NULL) {
+        if (strcmp(p->next->element, x) == 0) {
+            Position temp = p->next;
+            p->next = temp->next;
+            free(temp);
+            return;
+        }
+        p = p->next;
+    }
+    
+    //printf("%d does not exist, ignore.\n", x);
+}
+// makeNull(T)stringclose
+void makeNull(HashTable *pT) {
+    for (int i = 0; i < B; i++) {
+        strcpy(pT->buckets[i], EMPTY);
+    }
+}
+// member(x, T)stringclose
+int locate(ElementType x, HashTable *pT) {
+    int init = h(x);
+    int i = 0;
+    while (i < B && strcmp(pT->buckets[(init + i)%B], x) != 0 &&
+                    strcmp(pT->buckets[(init + i)%B], EMPTY) != 0)
+        i++;
+    
+    return (init + i)%B;
+}
+int member(ElementType x, HashTable *pT) {
+    int i = locate(x, pT);
+    return strcmp(pT->buckets[i], x) == 0;
+}
+// insert(x, T)stringclose
+int locate(ElementType x, HashTable *pT) {
+    int init = h(x);
+    int i = 0;
+    while (i < B && strcmp(pT->buckets[(init + i)%B], x) != 0 &&
+                    strcmp(pT->buckets[(init + i)%B], EMPTY) != 0)
+        i++;
+    
+    return (init + i)%B;
+}
+
+int locate1(ElementType x, HashTable *pT) {
+    int init = h(x);
+    int i = 0;
+    while (i < B && strcmp(pT->buckets[(init + i)%B], x) != 0 &&
+                    strcmp(pT->buckets[(init + i)%B], EMPTY) != 0 &&
+                    strcmp(pT->buckets[(init + i)%B], DELETED) != 0)
+        i++;
+    
+    return (init + i)%B;
+}
+
+void insert(ElementType x, HashTable *pT) {
+    int i = locate(x, pT);
+    if (x == pT->buckets[i])
+        return;
+    
+    i = locate1(x, pT);
+
+    if (strcmp(EMPTY, pT->buckets[i]) == 0 || strcmp(DELETED, pT->buckets[i]) == 0)
+        strcpy(pT->buckets[i], x);
+}
+// delete(x, T)stringclose
+int locate(ElementType x, HashTable *pT) {
+    int init = h(x);
+    int i = 0;
+    while (i < B && strcmp(pT->buckets[(init + i)%B], x) != 0 &&
+                    strcmp(pT->buckets[(init + i)%B], EMPTY) != 0)
+        i++; 
+    return (init + i)%B;
+}
+void delete(ElementType x, HashTable *pT) {
+    int i = locate(x, pT);
+    if (strcmp(x, pT->buckets[i]) == 0)
+        strcpy(pT->buckets[i], DELETED);
+}
+// insert(k, v, M)open
+void insert(KeyType k, ValueType v, Map *pM) {
+    int i = h(k);
+    Position temp = pM->buckets[i];
+    
+    // Check if key already exists in this bucket
+    while (temp!= NULL) {
+        if (strcmp(temp->element.key, k) == 0) {
+            return;  
+        }
+        temp = temp->next;
+    }
+    
+    // Key not found, insert new element at the beginning of the chain
+    Position newCell = (Position)malloc(sizeof(Cell));
+    strcpy(newCell->element.key, k);
+    newCell->element.value = v;
+    newCell->next = pM->buckets[i];
+    pM->buckets[i] = newCell;
+}
+// retrieve(k, M)open
+ValueType retrieve(KeyType k, Map *pM) {
+    int i = h(k);
+    Position temp = pM->buckets[i];
+    
+    // Traverse the chain in this bucket
+    while (temp != NULL) {
+        if (strcmp(temp->element.key, k) == 0) {
+            return temp->element.value;  // Key found, return its value
+        }
+        temp = temp->next;
+    }
+    
+    // Key not found
+    return -8241;
+}
+//delete(k, M)open
+void delete(KeyType k, Map *pM) {
+    int i = h(k);
+    Position p = pM->buckets[i];
+    if (p == NULL)
+        return;
+    
+    if (strcmp(p->element.key, k) == 0) {
+        Position temp = p;
+        pM->buckets[i] = temp->next;
+        free(temp);
+        return;
+    }
+        
+    
+    while (p->next != NULL) {
+        if (strcmp(p->next->element.key, k) == 0) {
+            Position temp = p->next;
+            p->next = temp->next;
+            free(temp);
+            return;
+        }
+        p = p->next;
+    }
+}
+// update(k, new_v, M)open
+void update(KeyType k, ValueType new_v, Map *pM) {
+    int i = h(k);
+    Position p = pM->buckets[i];
+    while (p != NULL) {
+        if (strcmp(p->element.key, k) == 0) {
+            p->element.value = new_v;
+            return;
+        }
+        p = p->next;
+    }
+}
+// insert(k, v, M)close
+void insert(KeyType k, ValueType v, Map *pM) {
+    //1. locate the bucket i
+    int i = locate(k, pM);
+
+    //2a. if bucket.key contains k => return
+    if (strcmp(pM->buckets[i].key, k) == 0) return;
+    //2b. Call locate1 to find an empty or deleted
+    i = locate1(k, pM);
+    if (strcmp(pM->buckets[i].key, EMPTY) == 0 || 
+        strcmp(pM->buckets[i].key, DELETED) == 0) {
+        strcpy(pM->buckets[i].key, k);
+        pM->buckets[i].value = v;
+    }
+}
+// retrieve(k, M)close
+ValueType retrieve(KeyType k, Map *pM) {
+    int i = locate(k, pM);
+    if (strcmp(pM->buckets[i].key, k) == 0)
+        return pM->buckets[i].value;
+    return -8048;
+}
+//delete(k, M)close
+void delete(KeyType k, Map *pM) {
+    //1. locate the bucket i
+    int i = locate(k, pM);
+    //2a. if bucket contains x
+    if (strcmp(pM->buckets[i].key, k) == 0) {
+        strcpy(pM->buckets[i].key, DELETED);
+        return;
+    }
+    //2b. X does not appear in M
+}
+//update(k, v, M)close
+void update(KeyType k, ValueType v, Map *pM) {
+    //2b. Call locate1 to find an empty or deleted
+    int i = locate1(k, pM);
+    if (strcmp(pM->buckets[i].key, EMPTY) == 0 || 
+        strcmp(pM->buckets[i].key, DELETED) == 0) {
+        strcpy(pM->buckets[i].key, k);
+        pM->buckets[i].value = v;
+    } else if (strcmp(pM->buckets[i].key, k) == 0)
+        pM->buckets[i].value = v;
+}
 
